@@ -1,3 +1,4 @@
+// Truy cập vào nhóm cần xóa bài và chạy script nhé
 var userId = 5515886; //ID thành viên muốn xóa các bài viết
 
 var fb_dtsg = require('DTSGInitialData').token;
