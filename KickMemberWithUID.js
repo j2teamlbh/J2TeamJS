@@ -1,4 +1,4 @@
-javascript: var uidList = prompt('Danh sách uid muốn bỏ kick'),
+javascript: var uidList = prompt('Danh sách uid muốn kick'),
     uid_avoid = prompt('Danh sách UID loại trừ'),
     groupID = prompt('ID Nhóm'),
     uidArr = uidList.split(' '),
