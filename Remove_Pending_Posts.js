@@ -35,7 +35,7 @@ var decline_post = (post_id, actor_id, gid, cb) => {
         })
         .then(res => res.json());
 }
-var remove_pending_posts = get_pending_posts(gid)
+get_pending_posts(gid)
     .then(posts => {
         console.log(`Tìm thấy ${posts.length} bài viết đang chờ duyệt`);
         console.log('Đang xoá bài viết chờ duyệt...');
