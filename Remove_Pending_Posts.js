@@ -48,10 +48,7 @@ var remove_pending_posts = get_pending_posts(gid)
         return Promise.all(posts.map((item, index) => {
             let id = atob(item.node.id).split(':');
             id = id[id.length - 1];
-            console.log(item.node.actors[0].id + ' - ' + item.node.actors[0].name + '\n');
-            console.log(item.node.message.text);
-            console.log('---------------------\n');
-            //             return decline_post(item.node.id, uid, gid).then(res => console.log('Đã xoá bài viết ' + id));
+            return decline_post(item.node.id, uid, gid).then(res => console.log('Đã xoá bài viết ' + id));
         }));
     })
     .then(() => console.log('Quét xong!'));
