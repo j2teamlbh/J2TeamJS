@@ -1,5 +1,5 @@
-// Các câu lệnh em thiết lập sẵn, 
-// các câu lệnh này e để cho người dùng có thể tùy chọn câu lệnh truyền vào và câu lệnh trả lời lại, 
+// Các câu lệnh thiết lập sẵn, 
+// các câu lệnh để cho người dùng có thể tùy chọn câu lệnh truyền vào và câu lệnh trả lời lại, 
 // cố định thiết bị(device) và hành động(action):
 var origCommands = [{
         device: "máy lạnh",
@@ -134,13 +134,13 @@ var origCommands = [{
         response: "đã bật đèn và quạt"
     }
 ];
-
-// origCommands.push({
-//     device: "máy lạnh,đèn",
-//     action: "bật",
-//     commands: "hãy bật máy lạnh và đèn"
-// })
-
+//Dữ liệu tùy chọn thêm vào mảng
+origCommands.push({
+    device: "máy lạnh,đèn",
+    action: "bật",
+    commands: "hãy bật máy lạnh và đèn"
+})
+//Câu lệnh thực thi
 function runActions(action, devices, number) {
     switch (action) {
         case 'bật':
@@ -217,7 +217,7 @@ function runActions(action, devices, number) {
             break;
     }
 }
-
+//Truyền câu lệnh vào và xử lý
 function readText(command) {
     var commandCopy = command;
     if (command.indexOf('tăng nhiệt độ máy lạnh lên') > -1) {
@@ -230,9 +230,9 @@ function readText(command) {
         var devices = origCommands[index].device;
         var actions = origCommands[index].action;
         var response = origCommands[index].response;
-        //Nếu thiết bị là 1 chuỗi gồm nhiều thiết bị như là: "đèn,quạt" thì e sẽ chuyển thành 1 mảng 
-        //và dùng forEach để thực hiện hành động
-        //A xem nếu có thể custom nhiều hành động với nhiều thiết bị thì tốt quá :D như là: bật đèn và tắt quạt (optional :D)
+        //Nếu thiết bị là 1 chuỗi gồm nhiều thiết bị như là: "đèn,quạt" thì cắt chuỗi, chuyển thành 1 mảng và dùng forEach 
+        //để thực hiện hành động
+        //Hiện tại vẫn chưa custom được nhiều hành động với nhiều thiết bị như là: bật đèn và tắt quạt (optional :D)
         if (devices.indexOf(',') > -1) {
             arrTemp = [];
             devices.split(',').forEach(device => {
@@ -245,8 +245,8 @@ function readText(command) {
                 console.log(`Đã ${actions} ${arrTemp.join(" và ")}`);
             }
         } else {
-            //Ở đây e tách nhiệt độ ra nếu chuỗi truyền vào có số như là tăng nhiệt độ lên 30 độ C. 
-            // E dùng indexOf để xem nó có trùng vs câu lệnh mình đặt là "tăng nhiệt độ máy lạnh lên"
+            //Tách nhiệt độ ra nếu chuỗi truyền vào có số như là "tăng nhiệt độ lên 30 độ C."
+            // Sử dụng "indexOf" để xem nó có trùng vs câu lệnh mình đặt là "tăng nhiệt độ máy lạnh lên"
             // {
             //     device: "máy lạnh",
             //     action: "tăng",
@@ -258,15 +258,15 @@ function readText(command) {
             if (actions === 'giảm' || actions === 'tăng') {
                 if (result) {
                     if (response) {
-                        console.log(response.replace("$t", number));
+                        console.log(response.replace("$t", number)); // Câu lệnh trả về nếu người dùng có thiết lập
                     } else {
-                        console.log(`Đã ${actions} nhiệt độ máy lạnh xuống ${number} độ`);
+                        console.log(`Đã ${actions} nhiệt độ máy lạnh xuống ${number} độ`); // Câu trả lời mặc định
                     }
                 } else {
-                    console.log(`Nhiệt độ máy lạnh phải nằm trong khoảng 16 đến 31 độ`);
+                    console.log(`Nhiệt độ máy lạnh phải nằm trong khoảng 16 đến 31 độ`); // Câu trả lời nếu sai quy tắc
                 }
             } else {
-                console.log(`Đã ${actions} ${result}`)
+                console.log(`Đã ${actions} ${result}`) // Câu lệnh trả về mặc định nếu không phải tăng hoặc giảm
             }
         }
     } else {
@@ -274,11 +274,11 @@ function readText(command) {
         console.log(`Bạn vừa nói là: ${command} đúng không? Câu lệnh chưa có, hãy thử lại`);
     }
 }
-//Hiện tại dữ liệu giọng nói của em nó chuyển sang text sẽ ở dạng mảng:
+//Hiện tại dữ liệu giọng nói chuyển sang text sẽ ở dạng mảng:
 //Ví dụ:
 var commands = ['bật tất cả đèn', 'bật tất cả đen'];
 var commands2 = ['tăng nhiệt độ máy lạnh lên 30 độ', 'tăng nhiệt độ máy lạnh lên 30 độ C'];
 var commands3 = ['bật máy lạnh'];
-// Vì dữ liệu truyền vào hầu như câu chuẩn xác nó nằm ở vị trí 0 nên e truyền vào commands[0] luôn 
-// nhưng lâu lâu nó vẫn nằm ở vị trí khác nên nếu có thể so sánh mảng thì tốt không thì cũng không sao ạ.
+// Vì dữ liệu truyền vào hầu như câu chuẩn xác nó nằm ở vị trí 0 nên truyền vào commands[0] luôn 
+// nhưng lâu lâu nó vẫn nằm ở vị trí khác nên nếu có thể so sánh mảng thì tốt không thì cũng không sao (Đang tìm hướng giải quyết - optional)
 readText(commands[0]);
