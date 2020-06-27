@@ -1,0 +1,26 @@
+var id_room = ""; //Edit here (ID of room)
+
+var user_id = require("CurrentUserInitialData").USER_ID;
+var fb_dtsg = require("DTSGInitialData").token;
+var variables = `{"input":{"client_mutation_id":"1","actor_id":"${user_id}}","reason":"OWNER_END_ROOM","room_hash":"${id_room}"}}`;
+var doc_id = "2839482142771497";
+var params = {
+  variables,
+  doc_id,
+  fb_dtsg,
+};
+var data = Object.keys(params)
+  .map(function (key) {
+    return key + "=" + encodeURIComponent(params[key]);
+  })
+  .join("&");
+
+fetch("https://www.facebook.com/api/graphql/", {
+  method: "POST",
+  body: data,
+  headers: {
+    "Content-Type": "application/x-www-form-urlencoded",
+  },
+})
+  .then((res) => res.json())
+  .then(() => console.log("Done"));
