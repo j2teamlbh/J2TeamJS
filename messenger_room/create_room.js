@@ -20,7 +20,7 @@ async function createRoom(status) {
   const doc_id = "4614122691946439";
 
   const params = {
-    variables: variables.toString(),
+    variables,
     doc_id,
     fb_dtsg,
   };
